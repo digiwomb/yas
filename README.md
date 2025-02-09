@@ -1,6 +1,10 @@
-# yas (yet another subscription tracker)
+# Yas -- yet another subscription tracker
 
-Yas is a Spring Boot-based web application designed to help users track their subscriptions in an organized and user-friendly way. Whether you're trying to manage recurring costs or keep track of multiple subscriptions, yas will help you stay on top of your finances.
+Yas (all letters lowercase, except at the beginning of the sentence) is a Spring Boot based web application designed to help users track their subscriptions in an organized and user-friendly way. Whether you're trying to manage recurring costs or keep track of multiple subscriptions, yas will help you stay on top of your finances.
+
+## Foreword
+
+Yas is currently not yet fully developed with all the functions required for the first release. The functions listed below show the target status.
 
 ## Features
 
@@ -25,6 +29,12 @@ Yas is a Spring Boot-based web application designed to help users track their su
 - **Payment accounts**  
   You'll also see which account the subscription is billed to, so you can keep track of your spending on different payment methods.
 
+- **API**
+  All content are accessible and modifiable via a REST API.
+
+- **Reminders and webhook calls**
+  Reminders can be set for individual subscriptions (e-mail). Alternatively, a webhook can also be called. The time of both can be configured.
+
 ## Technology Stack
 
 - **Spring Boot**: Backend framework
@@ -42,6 +52,7 @@ Yas is a Spring Boot-based web application designed to help users track their su
 Yas will be provided as both a Docker image and a Helm chart.
 
 ## Contribution
+
 Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request with your changes. Make sure to write tests for your changes and ensure that the existing functionality is not broken.
 
 ## License
