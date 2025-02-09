@@ -49,7 +49,7 @@ Yas is currently not yet fully developed with all the functions required for the
 - **Liquibase**: For database version control and schema management
 - **OAuth2**: For secure user authentication
 
-# Getting Started
+## Getting Started
 
 Yas will be provided as both a Docker image and a Helm chart.
 
