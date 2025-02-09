@@ -1,8 +1,8 @@
 # Yas – yet another subscription tracker
 
-Yas* is a Spring Boot based web application designed to help users track their subscriptions in an organized and user-friendly way. Whether you're trying to manage recurring costs or keep track of multiple subscriptions, yas will help you stay on top of your finances.
+Yas[^*] is a Spring Boot based web application designed to help users track their subscriptions in an organized and user-friendly way. Whether you're trying to manage recurring costs or keep track of multiple subscriptions, yas will help you stay on top of your finances.
 
-* all letters lowercase, except at the beginning of the sentence
+[^*] all letters lowercase, except at the beginning of the sentence
 
 ## Foreword
 
