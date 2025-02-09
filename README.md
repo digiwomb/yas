@@ -39,7 +39,7 @@ Yas is a Spring Boot-based web application designed to help users track their su
 
 # Getting Started
 
-`yas` will be provided as both a Docker image and a Helm chart.
+Yas will be provided as both a Docker image and a Helm chart.
 
 ## Contribution
 Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request with your changes. Make sure to write tests for your changes and ensure that the existing functionality is not broken.
