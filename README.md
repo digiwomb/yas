@@ -13,7 +13,7 @@ Yas is currently not yet fully developed with all the functions required for the
 - **No sign-in required or user accounts**  
   You can use yas without creating an account, or choose to sign in for a more personalized experience.
 
-- **OAuth authentication** (in a later release)
+- **OAuth authentication** (in a later release)  
   Users can authenticate via OAuth (Google, GitHub, etc.) for easier access.
 
 - **Role-based access control**  
@@ -22,19 +22,19 @@ Yas is currently not yet fully developed with all the functions required for the
 - **Detailed descriptions of subscriptions**  
   Subscriptions include detailed descriptions with links and images to explain the subscription items clearly. In a later release you can edit the description in a markdown editor.
   
-- **Summing up subscriptions**
+- **Summing up subscriptions**  
   yas will automatically sum your subscription expenses, giving you an overview of your monthly or annual subscription costs.
 
-- **Billing dates** (in a later release)
+- **Billing dates** (in a later release)  
   Each subscription will display the date it is charged, allowing you to track when each payment is due.
 
-- **Payment accounts** (in a later release)
+- **Payment accounts** (in a later release)  
   You'll also see which account the subscription is billed to, so you can keep track of your spending on different payment methods.
 
-- **API**
+- **API**  
   All content are accessible and modifiable via a REST API.
 
-- **Reminders and webhook calls** (in a later release)
+- **Reminders and webhook calls** (in a later release)  
   Reminders can be set for individual subscriptions (e-mail). Alternatively, a webhook can also be called. The time of both can be configured.
 
 ## Technology Stack
