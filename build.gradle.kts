@@ -33,6 +33,8 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("net.datafaker:datafaker:2.0.2")
+	implementation ("com.fasterxml.uuid:java-uuid-generator:5.1.0")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 kotlin {

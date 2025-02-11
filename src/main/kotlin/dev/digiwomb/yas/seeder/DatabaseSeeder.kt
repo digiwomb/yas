@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.repository.CrudRepository
+import org.springframework.transaction.annotation.Transactional
 
 @Configuration
 class DataSeeder(
@@ -16,6 +17,7 @@ class DataSeeder(
     private val log = LoggerFactory.getLogger(javaClass)
 
     @Bean
+    @Transactional
     fun seedDatabase(): CommandLineRunner {
         return CommandLineRunner {
             val nonEmptyRepositories = repositories.filter { it.count() > 0 }
