@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
+import java.math.RoundingMode
 import kotlin.random.Random
 
 @Component
@@ -24,7 +25,7 @@ class DevExpenseSeedData(
             repeat(5) {
                 val expense = Expense(
                     title = faker.hobby().activity(),
-                    amount = BigDecimal(Random.nextDouble(10.0, 500.0)).setScale(2, BigDecimal.ROUND_HALF_UP),
+                    amount = BigDecimal(Random.nextDouble(10.0, 500.0)).setScale(2, RoundingMode.HALF_UP),
                     userId = users
                 )
                 expenses.add(expense)
