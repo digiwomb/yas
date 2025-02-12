@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: "users_V002"
+      author: digiwomb
+      changes:
+        - addColumn:
+            tableName: ${UsersTableV001_TABLE_NAME}
+            columns:
+              - column:
+                  name: ${UsersTableV001_COLUMN_CREATED_AT}
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: ${UsersTableV001_COLUMN_UPDATED_AT}
+                  type: timestamp
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: CURRENT_TIMESTAMP
