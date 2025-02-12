@@ -13,20 +13,21 @@ data class Users(
     @Id
     @GeneratedValue
     @UuidV7Generator
+    @Column(name = UsersTable.COLUMN_ID)
     val id: UUID? = null,
 
     @get:NotBlank
     @get:NotNull
-    @Column(nullable = false, unique = true)
+    @Column(name = UsersTable.COLUMN_EMAIL, nullable = false, unique = true)
     val email: String = "",
 
     @get:NotBlank
     @get:NotNull
-    @Column(nullable = false)
+    @Column(name = UsersTable.COLUMN_NAME, nullable = false)
     val name: String = "",
 
     @get:NotBlank
     @get:NotNull
-    @Column(nullable = false)
+    @Column(name = UsersTable.COLUMN_PASSWORD, nullable = false)
     val password: String = ""
 )

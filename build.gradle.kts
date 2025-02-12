@@ -35,6 +35,7 @@ dependencies {
 	implementation("net.datafaker:datafaker:2.0.2")
 	implementation ("com.fasterxml.uuid:java-uuid-generator:5.1.0")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.liquibase:liquibase-core:4.23.2")
 }
 
 kotlin {
