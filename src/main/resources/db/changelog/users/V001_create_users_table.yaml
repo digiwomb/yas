@@ -1,34 +1,34 @@
 databaseChangeLog:
-  - changeSet:
-      id: "users.V001"
-      author: digiwomb
-      preConditions:
-        - onFail: MARK_RAN
-          not:
-            tableExists:
-              tableName: users
-      changes:
-        - createTable:
-            tableName: users
-            columns:
-              - column:
-                  name: id
-                  type: UUID
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
+- changeSet:
+    id: "users_V001"
+    author: digiwomb
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: ${UsersTableV001_TABLE_NAME}
+    changes:
+      - createTable:
+          tableName: ${UsersTableV001_TABLE_NAME}
+          columns:
+            - column:
+                name: ${UsersTableV001_COLUMN_ID}
+                type: UUID
+                constraints:
+                  primaryKey: true
+                  nullable: false
+            - column:
+                name: ${UsersTableV001_COLUMN_NAME}
+                type: varchar(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: ${UsersTableV001_COLUMN_EMAIL}
+                type: varchar(255)
+                constraints:
+                  nullable: false
+            - column:
+                name: ${UsersTableV001_COLUMN_PASSWORD}
+                type: varchar(255)
+                constraints:
+                  nullable: false
