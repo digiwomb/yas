@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import java.util.UUID
-import dev.digiwomb.yas.model.mapping.UsersTableV001 as UsersTable
+import dev.digiwomb.yas.model.mapping.users.UsersTableV001 as UsersTable
 
 @Entity
 @Table(name = UsersTable.TABLE_NAME)

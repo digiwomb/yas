@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.model.mapping
+package dev.digiwomb.yas.model.mapping.users
 
 open class UsersTableV001 {
     companion object {
