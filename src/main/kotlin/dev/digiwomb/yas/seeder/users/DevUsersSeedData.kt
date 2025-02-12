@@ -7,11 +7,10 @@ import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 @Profile("dev")
-class DevUserSeedData : DataProvider<Users> {
+class DevUsersSeedData : DataProvider<Users> {
     private val users = mutableListOf<Users>()
     private val faker = Faker()
     private val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
@@ -37,5 +36,9 @@ class DevUserSeedData : DataProvider<Users> {
 
     override fun getData(): List<Users> {
         return users
+    }
+
+    override fun getSortingNumber(): Int {
+        return 0
     }
 }

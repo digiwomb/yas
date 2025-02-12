@@ -1,6 +1,8 @@
 package dev.digiwomb.yas.seeder
 
+import dev.digiwomb.yas.model.Expense
 import dev.digiwomb.yas.model.Users
+import dev.digiwomb.yas.repository.ExpenseRepository
 import dev.digiwomb.yas.repository.UsersRepository
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
@@ -10,7 +12,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.transaction.annotation.Transactional
 
 @Configuration
-class DataSeeder(
+class DatabaseSeeder(
     private val seedData: List<DataProvider<*>>,
     private val repositories: List<CrudRepository<*, *>>,
 ) {
@@ -34,13 +36,16 @@ class DataSeeder(
                 return@CommandLineRunner
             }
 
-            seedData.forEach { provider ->
+            val sortedSeedData = seedData.sortedBy { it.getSortingNumber() }
+
+            sortedSeedData.forEach { provider ->
                 log.info("Seeding data provider ${provider.javaClass.simpleName}")
                 when (val data = provider.getData()) {
                     is List<*> -> {
                         if (data.isNotEmpty()) {
                             when (data.first()) {
                                 is Users -> (repositories.find { it is UsersRepository } as? UsersRepository)?.saveAll(data as List<Users>)
+                                is Expense -> (repositories.find { it is ExpenseRepository } as? ExpenseRepository)?.saveAll(data as List<Expense>)
                             }
                         }
                     }

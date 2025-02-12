@@ -5,3 +5,5 @@ spring:
     active: prod
   liquibase:
     enabled: true
+  flyway:
+    enabled: false
