@@ -1,4 +1,4 @@
 databaseChangeLog:
 - includeAll:
-    path: users/
+    path: migration/
     relativeToChangelogFile: true
