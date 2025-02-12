@@ -30,7 +30,7 @@ data class Expense(
     @get:NotNull
     @ManyToOne
     @JoinColumn(name = ExpenseTable.COLUMN_USER_ID, nullable = false)
-    val userId: Users? = null,
+    val user: Users? = null,
 
     @Column(name = ExpenseTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),

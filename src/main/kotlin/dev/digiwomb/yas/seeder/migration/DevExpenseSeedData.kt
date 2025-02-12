@@ -26,7 +26,7 @@ class DevExpenseSeedData(
                 val expense = Expense(
                     title = faker.hobby().activity(),
                     amount = BigDecimal(Random.nextDouble(10.0, 500.0)).setScale(2, RoundingMode.HALF_UP),
-                    userId = users
+                    user = users
                 )
                 expenses.add(expense)
             }
