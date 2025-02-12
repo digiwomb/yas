@@ -4,6 +4,7 @@ import dev.digiwomb.yas.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
+import java.time.Instant
 import java.util.UUID
 import dev.digiwomb.yas.model.mapping.users.UsersTableV001 as UsersTable
 
@@ -29,5 +30,16 @@ data class Users(
     @get:NotBlank
     @get:NotNull
     @Column(name = UsersTable.COLUMN_PASSWORD, nullable = false)
-    val password: String = ""
-)
+    val password: String = "",
+
+    @Column(name = UsersTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
+    val createdAt: Instant = Instant.now(),
+
+    @Column(name = UsersTable.COLUMN_UPDATED_AT, nullable = false)
+    var updatedAt: Instant = Instant.now()
+) {
+    @PreUpdate
+    fun onUpdate() {
+        this.copy(updatedAt = Instant.now())
+    }
+}
