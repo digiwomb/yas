@@ -10,6 +10,7 @@ databaseChangeLog:
                   name: ${UsersTableV001_COLUMN_CREATED_AT}
                   type: timestamp
                   constraints:
+                    updatable: false
                     nullable: false
                   defaultValueComputed: CURRENT_TIMESTAMP
               - column:
