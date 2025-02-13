@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.config
+package dev.digiwomb.yas.seeder
 
 import liquibase.integration.spring.SpringLiquibase
 import org.springframework.context.annotation.Bean
@@ -8,7 +8,7 @@ import java.net.URL
 import javax.sql.DataSource
 
 @Configuration
-class LiquibaseConfig() {
+class LiquibaseParams() {
 
     @Bean
     fun liquibase(dataSource: DataSource): SpringLiquibase {
