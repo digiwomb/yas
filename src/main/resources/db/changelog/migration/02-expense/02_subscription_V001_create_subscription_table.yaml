@@ -1,50 +1,50 @@
 databaseChangeLog:
   - changeSet:
-      id: "expense_V001"
+      id: "subscription_V001"
       author: digiwomb
       preConditions:
         - onFail: MARK_RAN
           not:
             tableExists:
-              tableName: ${ExpenseTableV001_TABLE_NAME}
+              tableName: ${SubscriptionTableV001_TABLE_NAME}
       changes:
         - createTable:
-            tableName: ${ExpenseTableV001_TABLE_NAME}
+            tableName: ${SubscriptionTableV001_TABLE_NAME}
             columns:
               - column:
-                  name: ${ExpenseTableV001_COLUMN_ID}
+                  name: ${SubscriptionTableV001_COLUMN_ID}
                   type: UUID
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: ${ExpenseTableV001_COLUMN_TITLE}
+                  name: ${SubscriptionTableV001_COLUMN_TITLE}
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: ${ExpenseTableV001_COLUMN_AMOUNT}
+                  name: ${SubscriptionTableV001_COLUMN_AMOUNT}
                   type: DECIMAL(19,4)
                   constraints:
                     nullable: false
               - column:
-                  name: ${ExpenseTableV001_COLUMN_CREATED_AT}
+                  name: ${SubscriptionTableV001_COLUMN_CREATED_AT}
                   type: timestamp
                   constraints:
                     updatable: false
                     nullable: false
                   defaultValueComputed: CURRENT_TIMESTAMP
               - column:
-                  name: ${ExpenseTableV001_COLUMN_UPDATED_AT}
+                  name: ${SubscriptionTableV001_COLUMN_UPDATED_AT}
                   type: timestamp
                   constraints:
                     nullable: false
                   defaultValueComputed: CURRENT_TIMESTAMP
               - column:
-                  name: ${ExpenseTableV001_COLUMN_USER_ID}
+                  name: ${SubscriptionTableV001_COLUMN_USER_ID}
                   type: UUID
                   constraints:
                     nullable: false
                     foreignKeyName: fk_expense_users
                     referencedTableName: users
-                    referencedColumnNames: ${UsersTableV001_COLUMN_ID}
+                    referencedColumnNames: ${SubscriptionTableV001_COLUMN_ID}
