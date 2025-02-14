@@ -62,6 +62,7 @@ class SecurityConfigDev(
             .authorizeHttpRequests {
                 it
                     .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                    .requestMatchers("/error").permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin(Customizer.withDefaults())
