@@ -1,8 +1,8 @@
-package dev.digiwomb.yas.model.mapping.expense
+package dev.digiwomb.yas.model.mapping.subscription
 
-open class ExpenseTableV001 {
+open class SubscriptionTableV001 {
     companion object {
-        const val TABLE_NAME = "expense"
+        const val TABLE_NAME = "subscription"
         const val COLUMN_ID = "id"
         const val COLUMN_TITLE = "title"
         const val COLUMN_AMOUNT = "amount"

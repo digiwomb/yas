@@ -1,6 +1,6 @@
-package dev.digiwomb.yas.seeder.expense
+package dev.digiwomb.yas.seeder.subscription
 
-import dev.digiwomb.yas.model.Expense
+import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.repository.UsersRepository
 import dev.digiwomb.yas.seeder.DataProvider
 import net.datafaker.Faker
@@ -13,25 +13,25 @@ import kotlin.random.Random
 
 @Component
 @Profile("dev")
-class DevExpenseSeedData(
+class DevSubscriptionSeedData(
     private val usersRepository: UsersRepository
-) : DataProvider<Expense> {
-    private val expenses = mutableListOf<Expense>()
+) : DataProvider<Subscription> {
+    private val subscriptions = mutableListOf<Subscription>()
     private val faker = Faker()
 
     @Bean
-    override fun getData(): List<Expense> {
+    override fun getData(): List<Subscription> {
         usersRepository.findAll().forEach { users ->
             repeat(5) {
-                val expense = Expense(
+                val subscription = Subscription(
                     title = faker.hobby().activity(),
                     amount = BigDecimal(Random.nextDouble(10.0, 500.0)).setScale(2, RoundingMode.HALF_UP),
                     user = users
                 )
-                expenses.add(expense)
+                subscriptions.add(subscription)
             }
         }
-    return expenses
+    return subscriptions
     }
 
     override fun getSortingNumber(): Int {

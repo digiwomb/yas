@@ -7,35 +7,35 @@ import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.UUID
-import dev.digiwomb.yas.model.mapping.expense.ExpenseTableV001 as ExpenseTable
+import dev.digiwomb.yas.model.mapping.subscription.SubscriptionTableV001 as SubscriptionTable
 
 @Entity
-@Table(name = ExpenseTable.TABLE_NAME)
-data class Expense(
+@Table(name = SubscriptionTable.TABLE_NAME)
+data class Subscription(
     @Id
     @GeneratedValue
     @UuidV7Generator
-    @Column(name = ExpenseTable.COLUMN_ID)
+    @Column(name = SubscriptionTable.COLUMN_ID)
     val id: UUID? = null,
 
     @get:NotBlank
     @get:NotNull
-    @Column(name = ExpenseTable.COLUMN_TITLE, nullable = false)
+    @Column(name = SubscriptionTable.COLUMN_TITLE, nullable = false)
     val title: String = "",
 
     @get:NotNull
-    @Column(name = ExpenseTable.COLUMN_AMOUNT, nullable = false)
+    @Column(name = SubscriptionTable.COLUMN_AMOUNT, nullable = false)
     val amount: BigDecimal = BigDecimal.ZERO,
 
     @get:NotNull
     @ManyToOne
-    @JoinColumn(name = ExpenseTable.COLUMN_USER_ID, nullable = false)
+    @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false)
     val user: Users? = null,
 
-    @Column(name = ExpenseTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
+    @Column(name = SubscriptionTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),
 
-    @Column(name = ExpenseTable.COLUMN_UPDATED_AT, nullable = false)
+    @Column(name = SubscriptionTable.COLUMN_UPDATED_AT, nullable = false)
     var updatedAt: Instant = Instant.now()
 ) {
     @PreUpdate
