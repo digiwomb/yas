@@ -25,7 +25,7 @@ class JwtAuthenticationFilter(
     ) {
         val requestURI = request.requestURI
 
-        if (requestURI.startsWith("/api/v") && requestURI.contains("/auth")) {
+        if ((requestURI.startsWith("/api/v") && requestURI.contains("/auth")) || !requestURI.startsWith("/api")) {
             filterChain.doFilter(request, response)
             return
         }
