@@ -1,10 +1,13 @@
 package dev.digiwomb.yas.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.util.JSONPObject
 import dev.digiwomb.yas.service.JwtTokenService
 import dev.digiwomb.yas.service.UsersDetailsServiceImplementation
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.boot.json.GsonJsonParser
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -33,9 +36,17 @@ class JwtAuthenticationFilter(
         val authHeader: String? = request.getHeader("Authorization")
 
         if(authHeader.doesNotContainBearerToken()) {
+            val responseBody = mapOf(
+                "type" to "about:blank",
+                "title" to "Forbidden",
+                "status" to 401,
+                "detail" to "No authentication token provided.",
+                "instance" to request.requestURI
+            )
+
             response.status = HttpServletResponse.SC_FORBIDDEN
             response.contentType = "application/json"
-            response.writer.write("{\"error\": \"Access Denied: No Authorization Header\"}")
+            response.writer.write(ObjectMapper().writeValueAsString(responseBody))
             return
         }
 

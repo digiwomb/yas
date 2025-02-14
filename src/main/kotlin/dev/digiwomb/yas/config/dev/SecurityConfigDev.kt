@@ -24,7 +24,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @Profile("dev")
-class SecurityConfigDev(private val authenticationProvider: AuthenticationProvider) {
+class SecurityConfigDev(
+    private val authenticationProvider: AuthenticationProvider,
+) {
 
     @Bean
     @Order(1)

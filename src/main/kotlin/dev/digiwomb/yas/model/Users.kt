@@ -1,5 +1,6 @@
 package dev.digiwomb.yas.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.digiwomb.yas.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -29,6 +30,7 @@ data class Users(
 
     @get:NotBlank
     @get:NotNull
+    @JsonIgnore
     @Column(name = UsersTable.COLUMN_PASSWORD, nullable = false)
     val password: String = "",
 
