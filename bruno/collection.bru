@@ -1,0 +1,11 @@
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkB5YXMubG9jYWwiLCJpYXQiOjE3Mzk1NDMxMjIsImV4cCI6MTczOTU0NjcyMX0.cJexlZpGA5Q16Gzcm7LgGPCScR-bJ0ZDPd6USujuM0-vVDUpsbQDuNK--z9nHvVG
+}
+
+script:pre-request {
+  req.setUrl(`http://localhost:8080/api/${req.url}`)
+}
