@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.security
+package dev.digiwomb.yas.service
 
 import dev.digiwomb.yas.repository.UsersRepository
 import org.springframework.security.core.userdetails.User

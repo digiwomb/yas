@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.seeder.migration
+package dev.digiwomb.yas.seeder.expense
 
 import dev.digiwomb.yas.model.Expense
 import dev.digiwomb.yas.repository.UsersRepository

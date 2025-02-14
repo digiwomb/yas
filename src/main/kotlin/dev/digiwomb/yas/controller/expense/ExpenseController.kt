@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.controller
+package dev.digiwomb.yas.controller.expense
 
 import dev.digiwomb.yas.model.Expense
 import dev.digiwomb.yas.repository.ExpenseRepository
