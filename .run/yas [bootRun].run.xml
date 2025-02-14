@@ -3,6 +3,7 @@
     <ExternalSystemSettings>
       <option name="env">
         <map>
+          <entry key="JWT_KEY" value="fewifuawerfbhuafbuaerfbuheraferfcerwfvbusrbhfvrsbsdfuhjvbdsfhcvfbwruhjbfvczweidghezubjhzewfvbcguhsjvrwbdefvb" />
           <entry key="SPRING_PROFILES_ACTIVE" value="dev" />
         </map>
       </option>
