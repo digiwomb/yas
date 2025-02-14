@@ -1,7 +1,7 @@
 package dev.digiwomb.yas.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import dev.digiwomb.yas.uuid.UuidV7Generator
+import dev.digiwomb.yas.model.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.uuid
+package dev.digiwomb.yas.model.uuid
 
 import com.fasterxml.uuid.Generators
 import org.hibernate.engine.spi.SharedSessionContractImplementor

@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.uuid
+package dev.digiwomb.yas.model.uuid
 
 import org.hibernate.annotations.IdGeneratorType
 
