@@ -6,7 +6,6 @@
     </envs>
     <option name="MAIN_CLASS_NAME" value="dev.digiwomb.yas.YasApplicationKt" />
     <module name="yas.main" />
-    <option name="PROGRAM_PARAMETERS" value="--debug" />
     <shortenClasspath name="NONE" />
     <method v="2">
       <option name="Make" enabled="true" />
