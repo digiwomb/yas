@@ -7,3 +7,5 @@ spring:
     enabled: true
   flyway:
     enabled: false
+  jwt:
+    key: ${JWT_KEY}
