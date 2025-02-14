@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Component
 class JwtAuthenticationFilter(
@@ -40,8 +42,9 @@ class JwtAuthenticationFilter(
                 "type" to "about:blank",
                 "title" to "Forbidden",
                 "status" to 401,
-                "detail" to "No authentication token provided.",
-                "instance" to request.requestURI
+                "detail" to "No authentication token provided",
+                "time" to LocalDateTime.now().toString(),
+                "path" to request.requestURI
             )
 
             response.status = HttpServletResponse.SC_FORBIDDEN
