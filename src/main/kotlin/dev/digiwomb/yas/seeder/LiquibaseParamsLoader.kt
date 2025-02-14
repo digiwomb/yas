@@ -8,7 +8,7 @@ import java.net.URL
 import javax.sql.DataSource
 
 @Configuration
-class LiquibaseParams() {
+class LiquibaseParamsLoader() {
 
     @Bean
     fun liquibase(dataSource: DataSource): SpringLiquibase {
