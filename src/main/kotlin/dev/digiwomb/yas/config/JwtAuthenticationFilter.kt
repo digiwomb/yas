@@ -1,13 +1,11 @@
 package dev.digiwomb.yas.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.util.JSONPObject
 import dev.digiwomb.yas.service.JwtTokenService
-import dev.digiwomb.yas.service.UsersDetailsServiceImplementation
+import dev.digiwomb.yas.service.UserDetailsServiceImplementation
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.boot.json.GsonJsonParser
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -15,11 +13,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Component
 class JwtAuthenticationFilter(
-    private val usersDetailsService: UsersDetailsServiceImplementation,
+    private val userDetailsService: UserDetailsServiceImplementation,
     private val tokenService: JwtTokenService
 ) : OncePerRequestFilter() {
 
@@ -57,7 +54,7 @@ class JwtAuthenticationFilter(
         val email = tokenService.extractEmail(jwtToken)
         
         if(email != null && SecurityContextHolder.getContext().authentication == null) {
-            val foundUser = usersDetailsService.loadUserByUsername(email)
+            val foundUser = userDetailsService.loadUserByUsername(email)
             
             if(tokenService.isValid(jwtToken, foundUser)) {
                 updateContext(foundUser, request)

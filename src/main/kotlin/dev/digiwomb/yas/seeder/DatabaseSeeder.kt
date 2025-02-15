@@ -1,9 +1,9 @@
 package dev.digiwomb.yas.seeder
 
 import dev.digiwomb.yas.model.Subscription
-import dev.digiwomb.yas.model.Users
+import dev.digiwomb.yas.model.User
 import dev.digiwomb.yas.repository.SubscriptionRepository
-import dev.digiwomb.yas.repository.UsersRepository
+import dev.digiwomb.yas.repository.UserRepository
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
@@ -44,7 +44,7 @@ class DatabaseSeeder(
                     is List<*> -> {
                         if (data.isNotEmpty()) {
                             when (data.first()) {
-                                is Users -> (repositories.find { it is UsersRepository } as? UsersRepository)?.saveAll(data as List<Users>)
+                                is User -> (repositories.find { it is UserRepository } as? UserRepository)?.saveAll(data as List<User>)
                                 is Subscription -> (repositories.find { it is SubscriptionRepository } as? SubscriptionRepository)?.saveAll(data as List<Subscription>)
                             }
                         }

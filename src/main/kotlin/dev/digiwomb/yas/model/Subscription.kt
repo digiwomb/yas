@@ -30,7 +30,7 @@ data class Subscription(
     @get:NotNull
     @ManyToOne
     @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false)
-    val user: Users? = null,
+    val user: User? = null,
 
     @Column(name = SubscriptionTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),

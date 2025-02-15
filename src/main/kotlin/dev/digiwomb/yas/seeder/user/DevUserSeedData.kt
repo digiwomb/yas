@@ -1,6 +1,6 @@
-package dev.digiwomb.yas.seeder.users
+package dev.digiwomb.yas.seeder.user
 
-import dev.digiwomb.yas.model.Users
+import dev.digiwomb.yas.model.User
 import dev.digiwomb.yas.seeder.DataProvider
 import net.datafaker.Faker
 import org.springframework.context.annotation.Profile
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component
 
 @Component
 @Profile("dev")
-class DevUsersSeedData : DataProvider<Users> {
-    private val users = mutableListOf<Users>()
+class DevUserSeedData : DataProvider<User> {
+    private val users = mutableListOf<User>()
     private val faker = Faker()
     private val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
 
     init {
-        val admin = Users(
+        val admin = User(
             email = "admin@yas.local",
             name = faker.name().fullName(),
             password = passwordEncoder.encode("password123")
@@ -25,7 +25,7 @@ class DevUsersSeedData : DataProvider<Users> {
         users.add(admin)
 
         repeat(4) {
-            val user = Users(
+            val user = User(
                 email = faker.internet().emailAddress(),
                 name = faker.name().fullName(),
                 password = passwordEncoder.encode("password123")
@@ -34,7 +34,7 @@ class DevUsersSeedData : DataProvider<Users> {
         }
     }
 
-    override fun getData(): List<Users> {
+    override fun getData(): List<User> {
         return users
     }
 

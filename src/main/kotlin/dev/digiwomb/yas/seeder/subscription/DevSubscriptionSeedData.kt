@@ -1,7 +1,7 @@
 package dev.digiwomb.yas.seeder.subscription
 
 import dev.digiwomb.yas.model.Subscription
-import dev.digiwomb.yas.repository.UsersRepository
+import dev.digiwomb.yas.repository.UserRepository
 import dev.digiwomb.yas.seeder.DataProvider
 import net.datafaker.Faker
 import org.springframework.context.annotation.Bean
@@ -14,14 +14,14 @@ import kotlin.random.Random
 @Component
 @Profile("dev")
 class DevSubscriptionSeedData(
-    private val usersRepository: UsersRepository
+    private val userRepository: UserRepository
 ) : DataProvider<Subscription> {
     private val subscriptions = mutableListOf<Subscription>()
     private val faker = Faker()
 
     @Bean
     override fun getData(): List<Subscription> {
-        usersRepository.findAll().forEach { users ->
+        userRepository.findAll().forEach { users ->
             repeat(5) {
                 val subscription = Subscription(
                     title = faker.hobby().activity(),

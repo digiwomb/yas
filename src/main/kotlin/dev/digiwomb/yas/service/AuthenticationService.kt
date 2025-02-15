@@ -11,7 +11,7 @@ import java.util.*
 @Service
 class AuthenticationService(
     private val authManager: AuthenticationManager,
-    private val usersDetailsService: UsersDetailsServiceImplementation,
+    private val usersDetailsService: UserDetailsServiceImplementation,
     private val jwtTokenService: JwtTokenService,
     private val jwtProperties: JwtProperties
 ) {

@@ -6,29 +6,30 @@ databaseChangeLog:
       - onFail: MARK_RAN
         not:
           tableExists:
-            tableName: ${UsersTableV001_TABLE_NAME}
+            tableName: ${UserTableV001_TABLE_NAME}
     changes:
       - createTable:
-          tableName: ${UsersTableV001_TABLE_NAME}
+          tableName: ${UserTableV001_TABLE_NAME}
           columns:
             - column:
-                name: ${UsersTableV001_COLUMN_ID}
+                name: ${UserTableV001_COLUMN_ID}
                 type: UUID
                 constraints:
                   primaryKey: true
                   nullable: false
             - column:
-                name: ${UsersTableV001_COLUMN_NAME}
+                name: ${UserTableV001_COLUMN_NAME}
                 type: varchar(255)
                 constraints:
                   nullable: false
             - column:
-                name: ${UsersTableV001_COLUMN_EMAIL}
+                name: ${UserTableV001_COLUMN_EMAIL}
                 type: varchar(255)
                 constraints:
                   nullable: false
+                  unique: true
             - column:
-                name: ${UsersTableV001_COLUMN_PASSWORD}
+                name: ${UserTableV001_COLUMN_PASSWORD}
                 type: varchar(255)
                 constraints:
                   nullable: false

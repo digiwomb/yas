@@ -3,9 +3,8 @@ package dev.digiwomb.yas.controller.subscription
 import dev.digiwomb.yas.exception.SubscriptionNotFoundException
 import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.repository.SubscriptionRepository
-import dev.digiwomb.yas.repository.UsersRepository
+import dev.digiwomb.yas.repository.UserRepository
 import jakarta.validation.Valid
-import liquibase.statement.core.CreateTableStatement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -20,11 +19,11 @@ class SubscriptionController() {
     private lateinit var subscriptionRepository: SubscriptionRepository
 
     @Autowired
-    private lateinit var usersRepository: UsersRepository
+    private lateinit var userRepository: UserRepository
 
     @GetMapping("")
     fun getAll(@AuthenticationPrincipal userDetails: UserDetails) : ResponseEntity<Iterable<Subscription>> {
-        val user = usersRepository.findByEmail(userDetails.username).orElseThrow()
+        val user = userRepository.findByEmail(userDetails.username).orElseThrow()
         val subscriptions = subscriptionRepository.findByUser(user)
 
         return ResponseEntity.ok(subscriptions)
@@ -32,7 +31,7 @@ class SubscriptionController() {
 
     @GetMapping("/{id}")
     fun getSubscriptionById(@PathVariable id: UUID, @AuthenticationPrincipal userDetails: UserDetails): ResponseEntity<Subscription> {
-        val user = usersRepository.findByEmail(userDetails.username).orElseThrow()
+        val user = userRepository.findByEmail(userDetails.username).orElseThrow()
         val subscription = subscriptionRepository.findById(id)
             .filter { it.user == user }
             .orElseThrow { SubscriptionNotFoundException() }
@@ -44,7 +43,7 @@ class SubscriptionController() {
         @Valid @RequestBody request: CreateSubscriptionRequest,
         @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Subscription> {
-        val user = usersRepository.findByEmail(userDetails.username).orElseThrow()
+        val user = userRepository.findByEmail(userDetails.username).orElseThrow()
         val newSubscription = Subscription(
             title = request.title,
             amount = request.amount,

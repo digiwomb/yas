@@ -1,6 +1,6 @@
-package dev.digiwomb.yas.model.mapping.users
+package dev.digiwomb.yas.model.mapping.user
 
-open class UsersTableV001 {
+open class UserTableV001 {
     companion object {
         const val TABLE_NAME = "users"
         const val COLUMN_ID = "id"
