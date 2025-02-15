@@ -16,6 +16,6 @@ spring:
   jwt:
      access-token-expiration: 3600000
      refresh-token-expiration: 86400000
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    root: debug
