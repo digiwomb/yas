@@ -9,3 +9,6 @@ spring:
     enabled: false
   jwt:
     key: ${JWT_KEY}
+  jpa:
+    hibernate:
+      ddl-auto: validate
