@@ -12,5 +12,7 @@ spring:
      access-token-expiration: 3600000
      refresh-token-expiration: 86400000
 logging:
+  file:
+    path: ./.logs/
   level:
     root: debug

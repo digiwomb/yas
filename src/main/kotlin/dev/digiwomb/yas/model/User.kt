@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull
 import java.time.Instant
 import java.util.UUID
 import dev.digiwomb.yas.model.mapping.user.UserTableV001 as UserTable
+import dev.digiwomb.yas.model.mapping.subscription.SubscriptionTableV001 as SubscriptionTable
+
 
 @Entity
 @Table(name = UserTable.TABLE_NAME)
@@ -34,6 +36,9 @@ data class User(
     @Column(name = UserTable.COLUMN_PASSWORD, nullable = false)
     val password: String = "",
 
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var subscriptions: MutableList<Subscription> = mutableListOf(),
+
     @Column(name = UserTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),
 
@@ -51,6 +56,6 @@ data class User(
 
     @PreUpdate
     fun onUpdate() {
-        this.copy(updatedAt = Instant.now())
+        this.updatedAt = Instant.now()
     }
 }

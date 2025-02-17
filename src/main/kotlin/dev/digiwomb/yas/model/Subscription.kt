@@ -33,8 +33,8 @@ data class Subscription(
 
     @get:NotNull
     @ManyToOne
-    @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false, updatable = false)
-    val user: User,
+//    @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false, updatable = false)
+    var user: User,
 
     @Column(name = SubscriptionTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),
@@ -55,6 +55,6 @@ data class Subscription(
 
     @PreUpdate
     fun onUpdate() {
-        this.copy(updatedAt = Instant.now())
+        this.updatedAt = Instant.now()
     }
 }

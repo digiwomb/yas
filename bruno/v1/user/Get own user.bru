@@ -1,0 +1,11 @@
+meta {
+  name: Get own user
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{version}}/user/me
+  body: none
+  auth: inherit
+}

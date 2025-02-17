@@ -9,6 +9,7 @@ import java.time.LocalDateTime
 import dev.digiwomb.yas.controller.ErrorResponse
 import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.converter.HttpMessageNotReadableException
 
 @ControllerAdvice
@@ -81,6 +82,44 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ErrorResponse> {
 
         val status = HttpStatus.UNAUTHORIZED
+        val errorResponse = ErrorResponse(
+            type = "about:blank",
+            timestamp = LocalDateTime.now(),
+            error = status.reasonPhrase,
+            status = status.value(),
+            errors = null,
+            detail = ex.message,
+            path = request.requestURI
+        )
+        return ResponseEntity(errorResponse, status)
+    }
+
+    @ExceptionHandler(value = [EmailExistsException::class])
+    protected fun handleDataIntegrityViolationException(
+        ex: RuntimeException,
+        request: HttpServletRequest
+    ): ResponseEntity<ErrorResponse> {
+
+        val status = HttpStatus.CONFLICT
+        val errorResponse = ErrorResponse(
+            type = "about:blank",
+            timestamp = LocalDateTime.now(),
+            error = status.reasonPhrase,
+            status = status.value(),
+            errors = null,
+            detail = ex.message,
+            path = request.requestURI
+        )
+        return ResponseEntity(errorResponse, status)
+    }
+
+    @ExceptionHandler(value = [InvalidOldPasswordException::class])
+    protected fun handleInvalidOldPasswordException(
+        ex: RuntimeException,
+        request: HttpServletRequest
+    ): ResponseEntity<ErrorResponse> {
+
+        val status = HttpStatus.UNPROCESSABLE_ENTITY
         val errorResponse = ErrorResponse(
             type = "about:blank",
             timestamp = LocalDateTime.now(),

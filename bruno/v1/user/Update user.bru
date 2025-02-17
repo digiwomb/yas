@@ -1,11 +1,11 @@
 meta {
-  name: Update subscription
+  name: Update user
   type: http
   seq: 5
 }
 
 put {
-  url: {{version}}/subscription/:id
+  url: {{version}}/user/:id
   body: json
   auth: inherit
 }
@@ -16,7 +16,8 @@ params:path {
 
 body:json {
   {
-    "title": "",
-    "amount": 0
+    "email": "",
+    "name": "",
+    "password": ""
   }
 }
