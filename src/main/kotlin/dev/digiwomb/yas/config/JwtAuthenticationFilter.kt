@@ -3,9 +3,11 @@ package dev.digiwomb.yas.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.digiwomb.yas.service.JwtTokenService
 import dev.digiwomb.yas.service.UserDetailsServiceImplementation
+import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -35,32 +37,28 @@ class JwtAuthenticationFilter(
         val authHeader: String? = request.getHeader("Authorization")
 
         if(authHeader.doesNotContainBearerToken()) {
-            val responseBody = mapOf(
-                "type" to "about:blank",
-                "title" to "Forbidden",
-                "status" to 401,
-                "detail" to "No authentication token provided",
-                "time" to LocalDateTime.now().toString(),
-                "path" to request.requestURI
-            )
 
-            response.status = HttpServletResponse.SC_FORBIDDEN
-            response.contentType = "application/json"
-            response.writer.write(ObjectMapper().writeValueAsString(responseBody))
+            handleInvalidOrExpiredTokenException(response, request.requestURI, "No authentication token provided")
             return
         }
 
         val jwtToken = authHeader!!.extractTokenValue()
-        val email = tokenService.extractEmail(jwtToken)
-        
-        if(email != null && SecurityContextHolder.getContext().authentication == null) {
-            val foundUser = userDetailsService.loadUserByUsername(email)
-            
-            if(tokenService.isValid(jwtToken, foundUser)) {
-                updateContext(foundUser, request)
-            }
 
-            filterChain.doFilter(request, response)
+        try {
+            val email = tokenService.extractEmail(jwtToken)
+
+            if(email != null && SecurityContextHolder.getContext().authentication == null) {
+                val foundUser = userDetailsService.loadUserByUsername(email)
+
+                if(tokenService.isValid(jwtToken, foundUser)) {
+                    updateContext(foundUser, request)
+                }
+
+                filterChain.doFilter(request, response)
+            }
+        } catch (ex: Exception) {
+            handleInvalidOrExpiredTokenException(response, request.requestURI, ex.message.orEmpty())
+            return
         }
     }
 
@@ -76,4 +74,20 @@ class JwtAuthenticationFilter(
 
     private fun String.extractTokenValue() : String =
         this.substringAfter("Bearer ")
+
+    private fun handleInvalidOrExpiredTokenException(response: HttpServletResponse, path: String, detail: String) {
+        val status = HttpStatus.UNAUTHORIZED
+        val responseBody = mapOf(
+            "type" to "about:blank",
+            "title" to status.reasonPhrase,
+            "status" to status.value(),
+            "detail" to detail,
+            "time" to LocalDateTime.now().toString(),
+            "path" to path
+        )
+
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
+        response.contentType = "application/json"
+        response.writer.write(ObjectMapper().writeValueAsString(responseBody))
+    }
 }

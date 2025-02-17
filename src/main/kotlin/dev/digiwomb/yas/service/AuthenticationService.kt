@@ -1,8 +1,8 @@
 package dev.digiwomb.yas.service
 
 import dev.digiwomb.yas.config.JwtProperties
-import dev.digiwomb.yas.controller.auth.AuthenticationRequest
-import dev.digiwomb.yas.controller.auth.AuthenticationResponse
+import dev.digiwomb.yas.controller.authentication.AuthenticationRequest
+import dev.digiwomb.yas.controller.authentication.AuthenticationResponse
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service

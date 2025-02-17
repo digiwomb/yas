@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ControllerAdvice
 import java.time.LocalDateTime
 import dev.digiwomb.yas.controller.ErrorResponse
+import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.converter.HttpMessageNotReadableException
 
@@ -55,7 +56,7 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = [SubscriptionNotFoundException::class])
-    protected fun handleNotFound(
+    protected fun handleSubscriptionNotFoundException(
         ex: RuntimeException,
         request: HttpServletRequest
     ): ResponseEntity<ErrorResponse> {
@@ -71,5 +72,24 @@ class GlobalExceptionHandler {
         )
 
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(value = [ExpiredJwtException::class])
+    protected fun handleExpiredJwtException(
+        ex: RuntimeException,
+        request: HttpServletRequest
+    ): ResponseEntity<ErrorResponse> {
+
+        val status = HttpStatus.UNAUTHORIZED
+        val errorResponse = ErrorResponse(
+            type = "about:blank",
+            timestamp = LocalDateTime.now(),
+            error = status.reasonPhrase,
+            status = status.value(),
+            errors = null,
+            detail = ex.message,
+            path = request.requestURI
+        )
+        return ResponseEntity(errorResponse, status)
     }
 }

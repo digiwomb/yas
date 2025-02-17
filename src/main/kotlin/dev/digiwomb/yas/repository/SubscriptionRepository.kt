@@ -8,4 +8,8 @@ import java.util.*
 interface SubscriptionRepository : JpaRepository<Subscription, UUID> {
 
     fun findByUser(user: User): List<Subscription>
+
+    override fun findById(id: UUID): Optional<Subscription>
+
+    fun findByIdAndUser(id: UUID, user: User): Subscription?
 }

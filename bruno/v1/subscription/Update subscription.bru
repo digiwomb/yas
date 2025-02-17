@@ -1,0 +1,22 @@
+meta {
+  name: Update subscription
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{version}}/subscription/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 
+}
+
+body:json {
+  {
+    "title": "Netflix",
+    "amount": 9.99
+  }
+}

@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.controller.auth
+package dev.digiwomb.yas.controller.authentication
 
 import dev.digiwomb.yas.service.AuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/auth")
-class AuthController(
+class AuthenticationController(
     private val authenticationService: AuthenticationService
 ) {
 

@@ -1,4 +1,4 @@
-package dev.digiwomb.yas.controller.auth
+package dev.digiwomb.yas.controller.authentication
 
 data class AuthenticationRequest(
     val email: String,

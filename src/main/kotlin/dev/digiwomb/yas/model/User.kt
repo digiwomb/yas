@@ -1,7 +1,8 @@
 package dev.digiwomb.yas.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import dev.digiwomb.yas.model.uuid.UuidV7Generator
+import dev.digiwomb.yas.controller.user.UserResponse
+import dev.digiwomb.yas.model.annotation.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -30,7 +31,6 @@ data class User(
 
     @get:NotBlank
     @get:NotNull
-    @JsonIgnore
     @Column(name = UserTable.COLUMN_PASSWORD, nullable = false)
     val password: String = "",
 
@@ -40,6 +40,15 @@ data class User(
     @Column(name = UserTable.COLUMN_UPDATED_AT, nullable = false)
     var updatedAt: Instant = Instant.now()
 ) {
+    internal fun toResponse(): UserResponse =
+        UserResponse(
+            id = this.id ?: throw IllegalStateException("User id is null"),
+            email = this.email,
+            name = this.name,
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
+        )
+
     @PreUpdate
     fun onUpdate() {
         this.copy(updatedAt = Instant.now())

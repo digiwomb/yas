@@ -1,0 +1,15 @@
+meta {
+  name: Delete subscription
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{version}}/subscription/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 
+}
