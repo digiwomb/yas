@@ -2,7 +2,7 @@ package dev.digiwomb.yas.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.digiwomb.yas.controller.user.UserResponse
-import dev.digiwomb.yas.model.annotation.uuid.UuidV7Generator
+import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -25,17 +25,17 @@ data class User(
     @get:NotBlank
     @get:NotNull
     @Column(name = UserTable.COLUMN_EMAIL, nullable = false, unique = true)
-    val email: String = "",
+    var email: String = "",
 
     @get:NotBlank
     @get:NotNull
     @Column(name = UserTable.COLUMN_NAME, nullable = false)
-    val name: String = "",
+    var name: String = "",
 
     @get:NotBlank
     @get:NotNull
     @Column(name = UserTable.COLUMN_PASSWORD, nullable = false)
-    val password: String = "",
+    var password: String = "",
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     var subscriptions: MutableList<Subscription> = mutableListOf(),

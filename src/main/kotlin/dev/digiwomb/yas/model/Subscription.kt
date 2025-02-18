@@ -2,7 +2,8 @@ package dev.digiwomb.yas.model
 
 import dev.digiwomb.yas.controller.subscription.SubscriptionResponse
 import dev.digiwomb.yas.exception.SubscriptionNotFoundException
-import dev.digiwomb.yas.model.annotation.uuid.UuidV7Generator
+import dev.digiwomb.yas.helper.OwnedEntity
+import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -20,28 +21,28 @@ data class Subscription(
     @GeneratedValue
     @UuidV7Generator
     @Column(name = SubscriptionTable.COLUMN_ID, updatable = false, nullable = false, unique = true)
-    val id: UUID? = null,
+    override val id: UUID? = null,
 
     @get:NotBlank
     @get:NotNull
     @Column(name = SubscriptionTable.COLUMN_TITLE, nullable = false)
-    val title: String = "",
+    var title: String = "",
 
     @get:NotNull
     @Column(name = SubscriptionTable.COLUMN_AMOUNT, nullable = false)
-    val amount: BigDecimal = BigDecimal.ZERO,
+    var amount: BigDecimal = BigDecimal.ZERO,
 
     @get:NotNull
     @ManyToOne
     @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false, updatable = false)
-    var user: User,
+    override val user: User,
 
     @Column(name = SubscriptionTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
     val createdAt: Instant = Instant.now(),
 
     @Column(name = SubscriptionTable.COLUMN_UPDATED_AT, nullable = false)
     var updatedAt: Instant = Instant.now()
-) {
+) : OwnedEntity<UUID, User>() {
 
     internal fun toResponse(user: User): SubscriptionResponse =
         SubscriptionResponse(
