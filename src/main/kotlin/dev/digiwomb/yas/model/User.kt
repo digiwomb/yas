@@ -6,19 +6,20 @@ import dev.digiwomb.yas.model.annotation.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
+import org.hibernate.annotations.DynamicUpdate
 import java.time.Instant
 import java.util.UUID
 import dev.digiwomb.yas.model.mapping.user.UserTableV001 as UserTable
 import dev.digiwomb.yas.model.mapping.subscription.SubscriptionTableV001 as SubscriptionTable
 
-
+@DynamicUpdate
 @Entity
 @Table(name = UserTable.TABLE_NAME)
 data class User(
     @Id
     @GeneratedValue
     @UuidV7Generator
-    @Column(name = UserTable.COLUMN_ID)
+    @Column(name = UserTable.COLUMN_ID, updatable = false, unique = false, nullable = true)
     val id: UUID? = null,
 
     @get:NotBlank

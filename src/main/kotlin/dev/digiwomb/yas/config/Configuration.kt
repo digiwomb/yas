@@ -1,7 +1,7 @@
 package dev.digiwomb.yas.config
 
 import dev.digiwomb.yas.repository.UserRepository
-import dev.digiwomb.yas.service.UserDetailsServiceImplementation
+import dev.digiwomb.yas.service.authentication.UserDetailsServiceImplementation
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

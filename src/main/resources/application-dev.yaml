@@ -14,5 +14,5 @@ spring:
 logging:
   file:
     path: ./.logs/
-  level:
-    root: debug
+#  level:
+#    root: debug

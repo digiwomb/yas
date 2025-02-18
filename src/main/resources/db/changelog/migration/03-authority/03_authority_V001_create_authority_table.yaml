@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: "authority_V001"
+      author: digiwomb
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: ${AuthorityTableV001_TABLE_NAME}
+      changes:
+        - createTable:
+            tableName: ${AuthorityTableV001_TABLE_NAME}
+            columns:
+              - column:
+                  name: ${AuthorityTableV001_COLUMN_ID}
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ${AuthorityTableV001_COLUMN_NAME}
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ${AuthorityTableV001_COLUMN_PARENT}
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_${AuthorityTableV001_TABLE_NAME}_${AuthorityTableV001_TABLE_NAME}
+                    referencedTableName: ${AuthorityTableV001_TABLE_NAME}
+                    referencedColumnNames: ${AuthorityTableV001_COLUMN_ID}
+                    deleteCascade: true

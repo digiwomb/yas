@@ -1,9 +1,8 @@
 package dev.digiwomb.yas.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dev.digiwomb.yas.service.JwtTokenService
-import dev.digiwomb.yas.service.UserDetailsServiceImplementation
-import io.jsonwebtoken.ExpiredJwtException
+import dev.digiwomb.yas.service.authentication.JwtTokenService
+import dev.digiwomb.yas.service.authentication.UserDetailsServiceImplementation
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

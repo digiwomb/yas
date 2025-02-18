@@ -19,7 +19,7 @@ data class Subscription(
     @Id
     @GeneratedValue
     @UuidV7Generator
-    @Column(name = SubscriptionTable.COLUMN_ID, updatable = false)
+    @Column(name = SubscriptionTable.COLUMN_ID, updatable = false, nullable = false, unique = true)
     val id: UUID? = null,
 
     @get:NotBlank
@@ -33,7 +33,7 @@ data class Subscription(
 
     @get:NotNull
     @ManyToOne
-//    @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false, updatable = false)
+    @JoinColumn(name = SubscriptionTable.COLUMN_USER_ID, nullable = false, updatable = false)
     var user: User,
 
     @Column(name = SubscriptionTable.COLUMN_CREATED_AT, nullable = false, updatable = false)
