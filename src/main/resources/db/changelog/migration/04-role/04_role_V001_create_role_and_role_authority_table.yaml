@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: "role_V001"
+      author: digiwomb
+      changes:
+        - createTable:
+            tableName: ${RoleTableV001_TABLE_NAME}
+            columns:
+              - column:
+                  name: ${RoleTableV001_COLUMN_ID}
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: ${RoleTableV001_COLUMN_NAME}
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: ${RoleAuthorityTableV001_TABLE_NAME}
+            columns:
+              - column:
+                  name: ${RoleAuthorityTableV001_COLUMN_ROLE_ID}
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_${RoleAuthorityTableV001_TABLE_NAME}_${RoleTableV001_TABLE_NAME}
+                    referencedTableName: ${RoleTableV001_TABLE_NAME}
+                    referencedColumnNames: ${RoleTableV001_COLUMN_ID}
+                    deleteCascade: true
+              - column:
+                  name: ${RoleAuthorityTableV001_COLUMN_AUTHORITY_ID}
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_${RoleAuthorityTableV001_TABLE_NAME}_${AuthorityTableV001_TABLE_NAME}
+                    referencedTableName: ${AuthorityTableV001_TABLE_NAME}
+                    referencedColumnNames: ${AuthorityTableV001_COLUMN_ID}
+                    deleteCascade: true
