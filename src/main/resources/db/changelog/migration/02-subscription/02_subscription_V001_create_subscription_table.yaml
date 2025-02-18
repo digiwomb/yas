@@ -47,5 +47,5 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_${SubscriptionTableV001_TABLE_NAME}_${UserTableV001_TABLE_NAME}
                     referencedTableName: ${UserTableV001_TABLE_NAME}
-                    referencedColumnNames: ${SubscriptionTableV001_COLUMN_ID}
+                    referencedColumnNames: ${UserTableV001_COLUMN_ID}
                     deleteCascade: true
