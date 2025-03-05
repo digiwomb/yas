@@ -1,6 +1,9 @@
 package dev.digiwomb.yas.config
 
+import dev.digiwomb.yas.repository.AuthorityRepository
 import dev.digiwomb.yas.repository.UserRepository
+import dev.digiwomb.yas.service.AuthorityService
+import dev.digiwomb.yas.service.UserService
 import dev.digiwomb.yas.service.authentication.UserDetailsServiceImplementation
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -18,16 +21,22 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class Configuration {
 
     @Bean
-    fun usersDetailsService(userRepository: UserRepository) : UserDetailsService = UserDetailsServiceImplementation(userRepository)
+    fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    fun authorityService(authorityRepository: AuthorityRepository) : AuthorityService = AuthorityService(authorityRepository)
 
     @Bean
-    fun authenticationProvider(userRepository: UserRepository): AuthenticationProvider =
+    fun userService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository) : UserService = UserService(userRepository, passwordEncoder, authorityService(authorityRepository))
+
+    @Bean
+    fun userDetailsService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository) : UserDetailsService = UserDetailsServiceImplementation(userService(userRepository, passwordEncoder, authorityRepository))
+
+    @Bean
+    fun authenticationProvider(userRepository: UserRepository, authorityRepository: AuthorityRepository): AuthenticationProvider =
         DaoAuthenticationProvider()
             .also {
-                it.setUserDetailsService(usersDetailsService(userRepository))
+                it.setUserDetailsService(userDetailsService(userRepository, passwordEncoder(), authorityRepository))
                 it.setPasswordEncoder(passwordEncoder())
             }
 

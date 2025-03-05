@@ -19,7 +19,6 @@ class DevSubscriptionSeedData(
     private val subscriptions = mutableListOf<Subscription>()
     private val faker = Faker()
 
-    @Bean
     override fun getData(): List<Subscription> {
         userRepository.findAll().forEach { users ->
             repeat(5) {
@@ -35,6 +34,6 @@ class DevSubscriptionSeedData(
     }
 
     override fun getSortingNumber(): Int {
-        return 1
+        return 2000
     }
 }

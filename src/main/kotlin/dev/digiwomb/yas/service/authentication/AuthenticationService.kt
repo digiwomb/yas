@@ -11,7 +11,7 @@ import java.util.*
 @Service
 class AuthenticationService(
     private val authManager: AuthenticationManager,
-    private val usersDetailsService: UserDetailsServiceImplementation,
+    private val userDetailsService: UserDetailsServiceImplementation,
     private val jwtTokenService: JwtTokenService,
     private val jwtProperties: JwtProperties
 ) {
@@ -23,7 +23,7 @@ class AuthenticationService(
             )
         )
 
-        val user = usersDetailsService.loadUserByUsername(authRequest.email)
+        val user = userDetailsService.loadUserByUsername(authRequest.email)
         val accessToken = jwtTokenService.generate(
             userDetails = user,
             expirationDate = Date(System.currentTimeMillis() + jwtProperties.accessTokenExpiration)

@@ -3,6 +3,7 @@ package dev.digiwomb.yas.model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.digiwomb.yas.controller.user.UserResponse
 import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
+import dev.digiwomb.yas.model.mapping.role.RoleAuthorityTableV001
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -11,6 +12,7 @@ import java.time.Instant
 import java.util.UUID
 import dev.digiwomb.yas.model.mapping.user.UserTableV001 as UserTable
 import dev.digiwomb.yas.model.mapping.subscription.SubscriptionTableV001 as SubscriptionTable
+import dev.digiwomb.yas.model.mapping.role.UserRoleTableV001 as UserRoleTable
 
 @DynamicUpdate
 @Entity
@@ -44,7 +46,15 @@ data class User(
     val createdAt: Instant = Instant.now(),
 
     @Column(name = UserTable.COLUMN_UPDATED_AT, nullable = false)
-    var updatedAt: Instant = Instant.now()
+    var updatedAt: Instant = Instant.now(),
+
+    @ManyToMany
+    @JoinTable(
+        name = UserRoleTable.TABLE_NAME,
+        joinColumns = [JoinColumn(name = UserRoleTable.COLUMN_USER_ID)],
+        inverseJoinColumns = [JoinColumn(name = UserRoleTable.COLUMN_ROLE_ID)]
+    )
+    val roles: MutableList<Role> = mutableListOf()
 ) {
     internal fun toResponse(): UserResponse =
         UserResponse(

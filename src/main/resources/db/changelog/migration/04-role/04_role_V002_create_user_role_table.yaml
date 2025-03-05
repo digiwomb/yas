@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: "role_V002"
+      author: digiwomb
+      changes:
+        - createTable:
+            tableName: ${UserRoleTableV001_TABLE_NAME}
+            columns:
+              - column:
+                    name: ${UserRoleTableV001_COLUMN_USER_ID}
+                    type: UUID
+                    constraints:
+                      nullable: false
+                      foreignKeyName: fk_${UserRoleTableV001_TABLE_NAME}_${UserTableV001_TABLE_NAME}
+                      referencedTableName: ${UserTableV001_TABLE_NAME}
+                      referencedColumnNames: ${UserTableV001_COLUMN_ID}
+                      deleteCascade: true
+              - column:
+                  name: ${UserRoleTableV001_COLUMN_ROLE_ID}
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_${UserRoleTableV001_TABLE_NAME}_${RoleTableV001_TABLE_NAME}
+                    referencedTableName: ${RoleTableV001_TABLE_NAME}
+                    referencedColumnNames: ${RoleTableV001_COLUMN_ID}
+                    deleteCascade: true

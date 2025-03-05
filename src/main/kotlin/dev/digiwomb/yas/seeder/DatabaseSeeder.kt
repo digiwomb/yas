@@ -1,7 +1,11 @@
 package dev.digiwomb.yas.seeder
 
+import dev.digiwomb.yas.model.Authority
+import dev.digiwomb.yas.model.Role
 import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.model.User
+import dev.digiwomb.yas.repository.AuthorityRepository
+import dev.digiwomb.yas.repository.RoleRepository
 import dev.digiwomb.yas.repository.SubscriptionRepository
 import dev.digiwomb.yas.repository.UserRepository
 import org.slf4j.LoggerFactory
@@ -44,6 +48,8 @@ class DatabaseSeeder(
                     is List<*> -> {
                         if (data.isNotEmpty()) {
                             when (data.first()) {
+                                is Authority -> (repositories.find { it is AuthorityRepository } as? AuthorityRepository)?.saveAll(data as List<Authority>)
+                                is Role -> (repositories.find { it is RoleRepository } as? RoleRepository)?.saveAll(data as List<Role>)
                                 is User -> (repositories.find { it is UserRepository } as? UserRepository)?.saveAll(data as List<User>)
                                 is Subscription -> (repositories.find { it is SubscriptionRepository } as? SubscriptionRepository)?.saveAll(data as List<Subscription>)
                             }

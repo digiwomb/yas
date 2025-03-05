@@ -26,7 +26,7 @@ databaseChangeLog:
                   name: ${AuthorityTableV001_COLUMN_PARENT}
                   type: UUID
                   constraints:
-                    nullable: false
+                    nullable: true
                     foreignKeyName: fk_${AuthorityTableV001_TABLE_NAME}_${AuthorityTableV001_TABLE_NAME}
                     referencedTableName: ${AuthorityTableV001_TABLE_NAME}
                     referencedColumnNames: ${AuthorityTableV001_COLUMN_ID}

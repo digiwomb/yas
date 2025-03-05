@@ -3,6 +3,9 @@ package dev.digiwomb.yas.service
 import dev.digiwomb.yas.exception.EmailExistsException
 import dev.digiwomb.yas.exception.InvalidOldPasswordException
 import dev.digiwomb.yas.exception.UserNotFoundException
+import dev.digiwomb.yas.helper.OwnerService
+import dev.digiwomb.yas.model.Authority
+import dev.digiwomb.yas.model.Role
 import dev.digiwomb.yas.model.User
 import dev.digiwomb.yas.repository.UserRepository
 import org.springframework.dao.DataIntegrityViolationException
@@ -14,8 +17,9 @@ import java.util.UUID
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
-) {
+    private val passwordEncoder: BCryptPasswordEncoder,
+    private val authorityService: AuthorityService
+) : OwnerService<User> {
 
     fun findAll(): List<User> =
         userRepository.findAll()
@@ -78,4 +82,33 @@ class UserService(
             throw EmailExistsException(user.email)
         }
     }
+
+    fun findAuthoritiesByUser(user: User): List<Authority> {
+
+        val authorities = mutableListOf<Authority>()
+
+        user.roles.forEach { role ->
+            role.authorities.forEach { authority ->
+                authorities.add(authority)
+                authorities.addAll(authorityService.getAllChildren(authority))
+            }
+        }
+
+        return authorities
+    }
+
+    override fun findAuthoritiesAsStringByUser(user: User): List<String> {
+
+        val authorities = mutableListOf<String>()
+
+        findAuthoritiesByUser(user).forEach { authority ->
+            authorities.add(authority.name)
+        }
+
+        return authorities
+    }
+
+    override fun findUsernameByUser(user: User): String = user.email
+
+    override fun findByUsername(username: String): User = findByEmail(username)
 }

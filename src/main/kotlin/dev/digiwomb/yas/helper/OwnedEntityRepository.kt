@@ -7,6 +7,4 @@ import org.springframework.data.repository.NoRepositoryBean
 interface OwnedEntityRepository<T : OwnedEntity<ID, OWNER>, ID, OWNER> : JpaRepository<T, ID> {
 
     fun findByOwner(owner: OWNER): List<T>
-
-    fun findByOwnerId(ownerID: ID): List<T>
 }

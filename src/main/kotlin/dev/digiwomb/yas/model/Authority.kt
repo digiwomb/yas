@@ -1,14 +1,8 @@
 package dev.digiwomb.yas.model
 
 import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
-import jakarta.persistence.Column
+import jakarta.persistence.*
 import dev.digiwomb.yas.model.mapping.authority.AuthorityTableV001 as AuthorityTable
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.hibernate.annotations.DynamicUpdate
@@ -32,5 +26,8 @@ data class Authority (
 
     @ManyToOne
     @JoinColumn(name = AuthorityTable.COLUMN_PARENT)
-    val parent: Authority? = null
+    val parent: Authority? = null,
+
+    @OneToMany(mappedBy = AuthorityTable.COLUMN_PARENT, cascade = [CascadeType.ALL], orphanRemoval = true)
+    val children: MutableList<Authority> = mutableListOf()
 )
