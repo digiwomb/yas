@@ -27,7 +27,7 @@ class UserDetailsServiceImplementation(private val userService: UserService) : U
 
         val authorities = mutableListOf<GrantedAuthority>()
 
-        userService.findAuthoritiesByEmail(email).forEach() { authority ->
+        userService.findAuthoritiesByUser(userService.findByEmail(email)).forEach() { authority ->
             authorities.add(SimpleGrantedAuthority(authority.name))
         }
 
