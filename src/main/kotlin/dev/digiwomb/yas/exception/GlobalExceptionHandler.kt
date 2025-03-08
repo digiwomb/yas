@@ -11,9 +11,28 @@ import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun handleMethodArgumentTypeMismatchException(
+        ex: MethodArgumentTypeMismatchException,
+        request: HttpServletRequest,
+    ): ResponseEntity<ErrorResponse> {
+
+        val errorResponse = ErrorResponse(
+            timestamp = LocalDateTime.now(),
+            status = HttpStatus.BAD_REQUEST.value(),
+            errors = null,
+            error =  HttpStatus.BAD_REQUEST.reasonPhrase,
+            path = request.requestURI,
+            detail = ex.message,
+        )
+
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(
@@ -31,7 +50,6 @@ class GlobalExceptionHandler {
             error = "Validation Error",
             path = request.requestURI,
             detail = null,
-            type = "about:blank"
         )
 
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
@@ -44,7 +62,6 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ErrorResponse> {
 
         val errorResponse = ErrorResponse(
-            type = "about:blank",
             timestamp = LocalDateTime.now(),
             error = HttpStatus.BAD_REQUEST.reasonPhrase,
             status = HttpStatus.BAD_REQUEST.value(),
@@ -63,7 +80,6 @@ class GlobalExceptionHandler {
     ): ResponseEntity<ErrorResponse> {
 
         val errorResponse = ErrorResponse(
-            type = "about:blank",
             timestamp = LocalDateTime.now(),
             error = HttpStatus.NOT_FOUND.reasonPhrase,
             status = HttpStatus.NOT_FOUND.value(),
@@ -83,7 +99,6 @@ class GlobalExceptionHandler {
 
         val status = HttpStatus.UNAUTHORIZED
         val errorResponse = ErrorResponse(
-            type = "about:blank",
             timestamp = LocalDateTime.now(),
             error = status.reasonPhrase,
             status = status.value(),
@@ -102,7 +117,6 @@ class GlobalExceptionHandler {
 
         val status = HttpStatus.CONFLICT
         val errorResponse = ErrorResponse(
-            type = "about:blank",
             timestamp = LocalDateTime.now(),
             error = status.reasonPhrase,
             status = status.value(),
@@ -121,7 +135,6 @@ class GlobalExceptionHandler {
 
         val status = HttpStatus.UNPROCESSABLE_ENTITY
         val errorResponse = ErrorResponse(
-            type = "about:blank",
             timestamp = LocalDateTime.now(),
             error = status.reasonPhrase,
             status = status.value(),

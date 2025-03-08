@@ -3,6 +3,8 @@ package dev.digiwomb.yas.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import dev.digiwomb.yas.service.authentication.JwtTokenService
 import dev.digiwomb.yas.service.authentication.UserDetailsServiceImplementation
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.MalformedJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -55,8 +57,14 @@ class JwtAuthenticationFilter(
 
                 filterChain.doFilter(request, response)
             }
-        } catch (ex: Exception) {
+        } catch (ex: MalformedJwtException) {
             handleInvalidOrExpiredTokenException(response, request.requestURI, ex.message.orEmpty())
+            return
+        } catch (ex: ExpiredJwtException) {
+            handleInvalidOrExpiredTokenException(response, request.requestURI, ex.message.orEmpty())
+            return
+        } catch (ex:Exception) {
+            handleException(response, request.requestURI, ex.toString())
             return
         }
     }
@@ -86,6 +94,23 @@ class JwtAuthenticationFilter(
         )
 
         response.status = HttpServletResponse.SC_UNAUTHORIZED
+        response.contentType = "application/json"
+        response.writer.write(ObjectMapper().writeValueAsString(responseBody))
+    }
+
+    private fun handleException(response: HttpServletResponse, path: String, detail: String) {
+
+        val status = HttpStatus.INTERNAL_SERVER_ERROR
+        val responseBody = mapOf(
+            "type" to "about:blank",
+            "title" to status.reasonPhrase,
+            "status" to status.value(),
+            "detail" to detail,
+            "time" to LocalDateTime.now().toString(),
+            "path" to path
+        )
+
+        response.status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR
         response.contentType = "application/json"
         response.writer.write(ObjectMapper().writeValueAsString(responseBody))
     }
