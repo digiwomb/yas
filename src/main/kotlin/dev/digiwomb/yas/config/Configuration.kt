@@ -1,8 +1,10 @@
 package dev.digiwomb.yas.config
 
 import dev.digiwomb.yas.repository.AuthorityRepository
+import dev.digiwomb.yas.repository.RoleRepository
 import dev.digiwomb.yas.repository.UserRepository
 import dev.digiwomb.yas.service.AuthorityService
+import dev.digiwomb.yas.service.RoleService
 import dev.digiwomb.yas.service.UserService
 import dev.digiwomb.yas.service.authentication.UserDetailsServiceImplementation
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -27,16 +29,19 @@ class Configuration {
     fun authorityService(authorityRepository: AuthorityRepository) : AuthorityService = AuthorityService(authorityRepository)
 
     @Bean
-    fun userService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository) : UserService = UserService(userRepository, passwordEncoder, authorityService(authorityRepository))
+    fun roleService(roleRepository: RoleRepository): RoleService = RoleService(roleRepository)
 
     @Bean
-    fun userDetailsService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository) : UserDetailsService = UserDetailsServiceImplementation(userService(userRepository, passwordEncoder, authorityRepository))
+    fun userService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository, roleRepository: RoleRepository) : UserService = UserService(userRepository, passwordEncoder, authorityService(authorityRepository), roleService(roleRepository))
 
     @Bean
-    fun authenticationProvider(userRepository: UserRepository, authorityRepository: AuthorityRepository): AuthenticationProvider =
+    fun userDetailsService(userRepository: UserRepository, passwordEncoder: BCryptPasswordEncoder, authorityRepository: AuthorityRepository, roleRepository: RoleRepository) : UserDetailsService = UserDetailsServiceImplementation(userService(userRepository, passwordEncoder, authorityRepository, roleRepository))
+
+    @Bean
+    fun authenticationProvider(userRepository: UserRepository, authorityRepository: AuthorityRepository, roleRepository: RoleRepository): AuthenticationProvider =
         DaoAuthenticationProvider()
             .also {
-                it.setUserDetailsService(userDetailsService(userRepository, passwordEncoder(), authorityRepository))
+                it.setUserDetailsService(userDetailsService(userRepository, passwordEncoder(), authorityRepository, roleRepository))
                 it.setPasswordEncoder(passwordEncoder())
             }
 

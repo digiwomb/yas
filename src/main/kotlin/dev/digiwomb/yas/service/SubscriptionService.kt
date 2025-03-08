@@ -1,5 +1,6 @@
 package dev.digiwomb.yas.service
 
+import dev.digiwomb.yas.controller.subscription.SubscriptionResponse
 import dev.digiwomb.yas.exception.SubscriptionNotFoundException
 import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.model.User

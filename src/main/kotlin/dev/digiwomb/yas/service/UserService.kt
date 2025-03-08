@@ -1,5 +1,6 @@
 package dev.digiwomb.yas.service
 
+import dev.digiwomb.yas.controller.user.UserResponse
 import dev.digiwomb.yas.exception.EmailExistsException
 import dev.digiwomb.yas.exception.InvalidOldPasswordException
 import dev.digiwomb.yas.exception.UserNotFoundException
@@ -7,6 +8,7 @@ import dev.digiwomb.yas.helper.OwnerService
 import dev.digiwomb.yas.model.Authority
 import dev.digiwomb.yas.model.Role
 import dev.digiwomb.yas.model.User
+import dev.digiwomb.yas.model.dto.UserDto
 import dev.digiwomb.yas.repository.UserRepository
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -18,7 +20,8 @@ import java.util.UUID
 class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: BCryptPasswordEncoder,
-    private val authorityService: AuthorityService
+    private val authorityService: AuthorityService,
+    private val roleService: RoleService,
 ) : OwnerService<User> {
 
     fun findAll(): List<User> =
@@ -27,6 +30,9 @@ class UserService(
     fun findById(id: UUID) : User = userRepository.findById(id).orElseThrow { UserNotFoundException(id.toString()) }
 
     fun findByEmail(email: String): User = userRepository.findByEmail(email)
+        ?: throw UsernameNotFoundException("User not found: $email")
+
+    fun findByEmailWithRoles(email: String): User = userRepository.findByEmailWithRoles(email)
         ?: throw UsernameNotFoundException("User not found: $email")
 
     fun create(user: User): User {
@@ -88,7 +94,10 @@ class UserService(
         val authorities = mutableListOf<Authority>()
 
         user.roles.forEach { role ->
-            role.authorities.forEach { authority ->
+
+            val roleWithAuthorities = roleService.findByNameWithAuthorities(role.name)
+
+            roleWithAuthorities.authorities.forEach { authority ->
                 authorities.add(authority)
                 authorities.addAll(authorityService.getAllChildren(authority))
             }
@@ -97,11 +106,17 @@ class UserService(
         return authorities
     }
 
+    fun findAuthoritiesByEmail(email: String): List<Authority> {
+
+        val user = findByEmailWithRoles(email)
+        return findAuthoritiesByUser(user)
+    }
+
     override fun findAuthoritiesAsStringByUser(user: User): List<String> {
 
         val authorities = mutableListOf<String>()
 
-        findAuthoritiesByUser(user).forEach { authority ->
+        findAuthoritiesByEmail(user.email).forEach { authority ->
             authorities.add(authority.name)
         }
 

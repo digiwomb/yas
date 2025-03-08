@@ -28,6 +28,6 @@ data class Authority (
     @JoinColumn(name = AuthorityTable.COLUMN_PARENT)
     val parent: Authority? = null,
 
-    @OneToMany(mappedBy = AuthorityTable.COLUMN_PARENT, cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = AuthorityTable.COLUMN_PARENT, cascade = [CascadeType.ALL], orphanRemoval = true)
     val children: MutableList<Authority> = mutableListOf()
 )

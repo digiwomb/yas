@@ -48,7 +48,7 @@ data class User(
     @Column(name = UserTable.COLUMN_UPDATED_AT, nullable = false)
     var updatedAt: Instant = Instant.now(),
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
         name = UserRoleTable.TABLE_NAME,
         joinColumns = [JoinColumn(name = UserRoleTable.COLUMN_USER_ID)],

@@ -21,7 +21,7 @@ data class Role(
     @Column(name = RoleTable.COLUMN_NAME, nullable = false, unique = true)
     val name: String = "",
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany//(fetch = FetchType.EAGER)
     @JoinTable(
         name = RoleAuthorityTable.TABLE_NAME,
         joinColumns = [JoinColumn(name = RoleAuthorityTable.COLUMN_ROLE_ID)],
