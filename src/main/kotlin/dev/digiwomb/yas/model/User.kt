@@ -1,8 +1,9 @@
 package dev.digiwomb.yas.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.uuid.Generators
+import dev.digiwomb.uuidv7.UuidV7Generator
 import dev.digiwomb.yas.controller.user.UserResponse
-import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
 import dev.digiwomb.yas.model.mapping.role.RoleAuthorityTableV001
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank

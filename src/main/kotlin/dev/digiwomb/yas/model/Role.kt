@@ -1,6 +1,6 @@
 package dev.digiwomb.yas.model
 
-import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
+import dev.digiwomb.uuidv7.UuidV7Generator
 import jakarta.persistence.*
 import dev.digiwomb.yas.model.mapping.role.RoleAuthorityTableV001 as RoleAuthorityTable
 import dev.digiwomb.yas.model.mapping.role.RoleTableV001 as RoleTable

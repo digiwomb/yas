@@ -3,7 +3,7 @@ package dev.digiwomb.yas.model
 import dev.digiwomb.yas.controller.subscription.SubscriptionResponse
 import dev.digiwomb.yas.exception.SubscriptionNotFoundException
 import dev.digiwomb.yas.helper.OwnedEntity
-import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
+import dev.digiwomb.uuidv7.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
