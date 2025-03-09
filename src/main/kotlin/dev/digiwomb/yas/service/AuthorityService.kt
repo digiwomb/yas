@@ -1,5 +1,6 @@
 package dev.digiwomb.yas.service
 
+import dev.digiwomb.yas.exception.AuthorityNotFoundException
 import dev.digiwomb.yas.model.Authority
 import dev.digiwomb.yas.repository.AuthorityRepository
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
@@ -14,7 +15,7 @@ class AuthorityService(
 
         val allChildren = mutableListOf<Authority>()
         val authorityWithChildren = authorityRepository.findByNameWithChildren(authority.name)
-            ?: throw NotFoundException()
+            ?: throw AuthorityNotFoundException(authority.name)
 
         authorityWithChildren.children.forEach { children ->
             allChildren.add(children)

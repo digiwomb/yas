@@ -1,11 +1,12 @@
 package dev.digiwomb.yas.repository
 
+import dev.digiwomb.yas.helper.OwnedEntityRepository
 import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.model.User
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface SubscriptionRepository : JpaRepository<Subscription, UUID> {
+interface SubscriptionRepository : OwnedEntityRepository<Subscription, UUID, User, UUID> {
 
     fun findByUser(user: User): List<Subscription>
 

@@ -25,7 +25,7 @@ data class User(
     @get:NotBlank
     @get:NotNull
     @Column(name = UserTable.COLUMN_EMAIL, nullable = false, unique = true)
-    var email: String = "",
+    override var email: String = "",
 
     @get:NotBlank
     @get:NotNull

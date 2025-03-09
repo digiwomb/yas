@@ -9,6 +9,7 @@ import dev.digiwomb.yas.service.SubscriptionService
 import dev.digiwomb.yas.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -22,16 +23,21 @@ class SubscriptionController(
     private val subscriptionService: SubscriptionService,
 ) {
 
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_READ')")
     @GetMapping("")
     fun findAll(@AuthenticationPrincipal userDetails: UserDetails) : List<SubscriptionResponse> {
 
         val user = userService.findByEmail(userDetails.username)
 
-        val response = subscriptionService.findByUser(user).map {
+//        val response = subscriptionService.findByUser(user).map {
+//            it.toResponse(user)
+//        }
+//
+//        return response
+
+        return subscriptionService.findAllEntitiesByUserId(userService.findIdByEmail(userDetails.username)).map {
             it.toResponse(user)
         }
-
-        return response
     }
 
     @GetMapping("/{id}")
@@ -56,6 +62,9 @@ class SubscriptionController(
         return response
     }
 
+    //@PreAuthorize("hasAuthority('SUBSCRIPTION_DELETE')")
+    @PreAuthorize("hasPermission(#id, 'Subscription', 'DELETE') " +
+            "&& hasAuthority('SUBSCRIPTION_DELETE')")
     @DeleteMapping("/{id}")
     fun delete(
         @PathVariable id: UUID,

@@ -26,7 +26,7 @@ class UserService(
 
     override fun findById(id: UUID) : User = userRepository.findById(id).orElseThrow { UserNotFoundException(id.toString()) }
 
-    fun findByEmail(email: String): User = userRepository.findByEmail(email)
+    override fun findByEmail(email: String): User = userRepository.findByEmail(email)
         ?: throw UsernameNotFoundException("User not found: $email")
 
     fun findByEmailWithRoles(email: String): User = userRepository.findByEmailWithRoles(email)

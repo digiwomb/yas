@@ -85,7 +85,6 @@ class JwtAuthenticationFilter(
     private fun handleInvalidOrExpiredTokenException(response: HttpServletResponse, path: String, detail: String) {
         val status = HttpStatus.UNAUTHORIZED
         val responseBody = mapOf(
-            "type" to "about:blank",
             "title" to status.reasonPhrase,
             "status" to status.value(),
             "detail" to detail,
@@ -102,7 +101,6 @@ class JwtAuthenticationFilter(
 
         val status = HttpStatus.INTERNAL_SERVER_ERROR
         val responseBody = mapOf(
-            "type" to "about:blank",
             "title" to status.reasonPhrase,
             "status" to status.value(),
             "detail" to detail,

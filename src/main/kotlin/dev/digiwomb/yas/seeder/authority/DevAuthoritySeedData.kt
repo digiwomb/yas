@@ -17,18 +17,26 @@ class DevAuthoritySeedData : DataProvider<Authority> {
 
     override fun getData(): List<Authority> {
 
-        val subscriptionReadAllAuthority = Authority(
-            name = "SUBSCRIPTION_READ_ALL"
-        )
+        val entities = arrayOf("SUBSCRIPTION")
 
-        authorities.add(subscriptionReadAllAuthority)
+        authorities.addAll(generateAuthorities(entities))
 
-        val subscriptionReadAuthority = Authority(
-            name = "SUBSCRIPTION_READ",
-            parent = subscriptionReadAllAuthority
-        )
+        return authorities
+    }
 
-        authorities.add(subscriptionReadAuthority)
+    private fun generateAuthorities(strings: Array<String>): List<Authority> {
+        val authorities = mutableListOf<Authority>()
+
+        for (str in strings) {
+            val readAll = Authority(name= "${str}_READ_ALL")
+            val writeAll = Authority(name= "${str}_WRITE_ALL")
+            val create = Authority(name= "${str}_CREATE", parent = writeAll)
+            val read = Authority(name= "${str}_READ", parent = readAll)
+            val update = Authority(name= "${str}_UPDATE", parent = writeAll)
+            val delete = Authority(name= "${str}_DELETE", parent = writeAll)
+
+            authorities.addAll(listOf(readAll, writeAll, create, read, update, delete))
+        }
 
         return authorities
     }

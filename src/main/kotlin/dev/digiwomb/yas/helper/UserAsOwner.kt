@@ -12,4 +12,6 @@ abstract class UserAsOwner<ID>(
     @GeneratedValue
     @Column(updatable = false, nullable = false, unique = true)
     val id: ID? = null,
+
+    val email: String? = null
 ) {}

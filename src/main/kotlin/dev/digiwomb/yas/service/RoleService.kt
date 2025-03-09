@@ -1,5 +1,6 @@
 package dev.digiwomb.yas.service
 
+import dev.digiwomb.yas.exception.RoleNotFoundException
 import dev.digiwomb.yas.repository.RoleRepository
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
@@ -10,5 +11,5 @@ class RoleService(
 ) {
 
     fun findByNameWithAuthorities(name: String) = roleRepository.findByNameWithAuthorities(name)
-        ?: throw NotFoundException()
+        ?: throw RoleNotFoundException(name)
 }

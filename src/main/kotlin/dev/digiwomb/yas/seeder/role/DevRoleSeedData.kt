@@ -17,18 +17,24 @@ class DevRoleSeedData(
 
     override fun getData(): List<Role> {
 
-        val authorities = authorityRepository.findAll().associateBy { it.name }
         val roles = mutableListOf<Role>()
+        val entities = arrayOf("SUBSCRIPTION")
+
 
         val userRole = Role(
             name = "ROLE_USER",
-            authorities = mutableListOf(authorities["SUBSCRIPTION_READ"]!!)
+            authorities = authorityRepository.findAll().filter { authority ->
+                entities.any { entity -> authority.name.contains(entity) && !authority.name.endsWith("_ALL") }
+            }.toMutableList()
         )
         roles.add(userRole)
 
         val adminRole = Role(
             name = "ROLE_ADMIN",
-            authorities = mutableListOf(authorities["SUBSCRIPTION_READ_ALL"]!!)
+//            authorities = authorityRepository.findAll()
+            authorities = authorityRepository.findAll().filter { authority ->
+                entities.any { entity -> authority.name.contains(entity) && authority.name.endsWith("_ALL") }
+            }.toMutableList()
         )
         roles.add(adminRole)
 
