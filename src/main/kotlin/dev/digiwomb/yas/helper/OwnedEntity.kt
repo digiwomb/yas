@@ -1,6 +1,5 @@
 package dev.digiwomb.yas.helper
 
-import dev.digiwomb.yas.helper.annotation.uuid.UuidV7Generator
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotNull
 
