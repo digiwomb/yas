@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql: TRACE
+    org.apache.coyote.http11.Http11Processor: WARN

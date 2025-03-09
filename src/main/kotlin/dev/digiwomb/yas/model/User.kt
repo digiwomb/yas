@@ -1,10 +1,8 @@
 package dev.digiwomb.yas.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.uuid.Generators
 import dev.digiwomb.uuidv7.UuidV7Generator
 import dev.digiwomb.yas.controller.user.UserResponse
-import dev.digiwomb.yas.model.mapping.role.RoleAuthorityTableV001
+import dev.digiwomb.yas.helper.UserAsOwner
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -12,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate
 import java.time.Instant
 import java.util.UUID
 import dev.digiwomb.yas.model.mapping.user.UserTableV001 as UserTable
-import dev.digiwomb.yas.model.mapping.subscription.SubscriptionTableV001 as SubscriptionTable
 import dev.digiwomb.yas.model.mapping.role.UserRoleTableV001 as UserRoleTable
 
 @DynamicUpdate
@@ -23,7 +20,7 @@ data class User(
     @GeneratedValue
     @UuidV7Generator
     @Column(name = UserTable.COLUMN_ID, updatable = false, unique = false, nullable = true)
-    val id: UUID? = null,
+    override val id: UUID? = null,
 
     @get:NotBlank
     @get:NotNull
@@ -56,7 +53,7 @@ data class User(
         inverseJoinColumns = [JoinColumn(name = UserRoleTable.COLUMN_ROLE_ID)]
     )
     val roles: MutableList<Role> = mutableListOf()
-) {
+): UserAsOwner<UUID>() {
     internal fun toResponse(): UserResponse =
         UserResponse(
             id = this.id ?: throw IllegalStateException("User id is null"),

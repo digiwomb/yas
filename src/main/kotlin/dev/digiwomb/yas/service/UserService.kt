@@ -1,14 +1,11 @@
 package dev.digiwomb.yas.service
 
-import dev.digiwomb.yas.controller.user.UserResponse
 import dev.digiwomb.yas.exception.EmailExistsException
 import dev.digiwomb.yas.exception.InvalidOldPasswordException
 import dev.digiwomb.yas.exception.UserNotFoundException
-import dev.digiwomb.yas.helper.OwnerService
+import dev.digiwomb.yas.helper.UserAsOwnerService
 import dev.digiwomb.yas.model.Authority
-import dev.digiwomb.yas.model.Role
 import dev.digiwomb.yas.model.User
-import dev.digiwomb.yas.model.dto.UserDto
 import dev.digiwomb.yas.repository.UserRepository
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -22,12 +19,12 @@ class UserService(
     private val passwordEncoder: BCryptPasswordEncoder,
     private val authorityService: AuthorityService,
     private val roleService: RoleService,
-) : OwnerService<User> {
+) : UserAsOwnerService<User, UUID> {
 
     fun findAll(): List<User> =
         userRepository.findAll()
 
-    fun findById(id: UUID) : User = userRepository.findById(id).orElseThrow { UserNotFoundException(id.toString()) }
+    override fun findById(id: UUID) : User = userRepository.findById(id).orElseThrow { UserNotFoundException(id.toString()) }
 
     fun findByEmail(email: String): User = userRepository.findByEmail(email)
         ?: throw UsernameNotFoundException("User not found: $email")
@@ -112,18 +109,15 @@ class UserService(
         return findAuthoritiesByUser(user)
     }
 
-    override fun findAuthoritiesAsStringByUser(user: User): List<String> {
+    override fun findAuthoritiesAsStringByUserId(ownerID: UUID): List<String> {
 
+        val email = findById(ownerID).email
         val authorities = mutableListOf<String>()
 
-        findAuthoritiesByEmail(user.email).forEach { authority ->
+        findAuthoritiesByEmail(email).forEach { authority ->
             authorities.add(authority.name)
         }
 
         return authorities
     }
-
-    override fun findUsernameByUser(user: User): String = user.email
-
-    override fun findByUsername(username: String): User = findByEmail(username)
 }

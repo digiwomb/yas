@@ -1,7 +1,6 @@
 package dev.digiwomb.yas.model
 
 import dev.digiwomb.yas.controller.subscription.SubscriptionResponse
-import dev.digiwomb.yas.exception.SubscriptionNotFoundException
 import dev.digiwomb.yas.helper.OwnedEntity
 import dev.digiwomb.uuidv7.UuidV7Generator
 import jakarta.persistence.*
@@ -42,7 +41,7 @@ data class Subscription(
 
     @Column(name = SubscriptionTable.COLUMN_UPDATED_AT, nullable = false)
     var updatedAt: Instant = Instant.now()
-) : OwnedEntity<UUID, User>() {
+) : OwnedEntity<UUID, User, UUID>() {
 
     internal fun toResponse(user: User): SubscriptionResponse =
         SubscriptionResponse(

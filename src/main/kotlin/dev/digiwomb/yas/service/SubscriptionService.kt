@@ -1,14 +1,11 @@
 package dev.digiwomb.yas.service
 
-import dev.digiwomb.yas.controller.subscription.SubscriptionResponse
 import dev.digiwomb.yas.exception.SubscriptionNotFoundException
 import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.model.User
 import dev.digiwomb.yas.repository.SubscriptionRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.isAccessible
 
 @Service
 class SubscriptionService(

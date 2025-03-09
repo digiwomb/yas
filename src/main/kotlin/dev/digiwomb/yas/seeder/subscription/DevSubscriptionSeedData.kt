@@ -4,7 +4,6 @@ import dev.digiwomb.yas.model.Subscription
 import dev.digiwomb.yas.repository.UserRepository
 import dev.digiwomb.yas.seeder.DataProvider
 import net.datafaker.Faker
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
